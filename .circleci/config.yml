@@ -1,0 +1,117 @@
+version: 2.1
+
+orbs:
+  codecov: codecov/codecov@1.0.5
+
+references:
+  default: &defaults
+    working_directory: ~/go/src/github/k-yomo/go_echo_boilerplate
+    docker:
+      - image: circleci/golang:1.12
+  restore_module_cache: &restore_module_cache
+    restore_cache:
+      keys:
+        - mod-v1-{{ checksum "go.sum" }}
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - *restore_module_cache
+      - run:
+          name:
+          command: go mod download
+      - save_cache:
+          key: mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - "~/go/pkg/mod/cache"
+
+  test:
+    <<: *defaults
+    docker:
+      - image: circleci/golang:1.12
+        environment:
+          TZ: Asia/Tokyo
+          ENV: test
+          DBName: go_echo_boilerplate_test
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: 'mysql'
+          DB_PASSWORD: 'mysql'
+          JWT_SIGNING_KEY: test_key
+          SENDGRID_API_KEY: dummy_key
+          TWILIO_ACCOUNT_SID: dummy_sid
+          TWILIO_AUTH_TOKEN: dummy_token
+      - image: circleci/mysql:5.7
+        environment:
+          MYSQL_DATABASE: go_echo_boilerplate_test
+          MYSQL_USER: 'mysql'
+          MYSQL_PASSWORD: 'mysql'
+    steps:
+      - checkout
+      - *restore_module_cache
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+      - run:
+          name: Test
+          command: make test
+      - codecov/upload:
+          file: ./coverage.out
+
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Lint
+          command: "! go fmt ./... 2>&1 | read"
+
+  push_image:
+    docker:
+    - image: google/cloud-sdk
+    environment:
+      GCP_PROJECT_ID: go-echo-boilerplate-0
+      IMAGE_NAME: go-echo-boilerplate
+      HOST: asia.gcr.io
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 18.06.0-ce
+      - run:
+          name: Setup Cloud SDK
+          command: |
+            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project ${GCP_PROJECT_ID}
+            gcloud --quiet config set compute/zone asia-east1-a
+            gcloud --quiet auth configure-docker
+      - run:
+          name: Push docker image
+          command: |
+            docker build -t ${IMAGE_NAME} .
+            docker tag ${IMAGE_NAME} ${HOST}/${GCP_PROJECT_ID}/${IMAGE_NAME}:${CIRCLE_SHA1}
+            docker tag ${IMAGE_NAME} ${HOST}/${GCP_PROJECT_ID}/${IMAGE_NAME}:latest
+            if [ -n "${CIRCLE_TAG}" ]; then
+              docker tag ${IMAGE_NAME} ${HOST}/${GCP_PROJECT_ID}/${IMAGE_NAME}:${CIRCLE_TAG}
+            fi
+            docker push ${HOST}/${GCP_PROJECT_ID}/${IMAGE_NAME}
+
+
+workflows:
+  version: 2.1
+  build_and_test:
+    jobs:
+      - build
+      - lint
+      - test:
+          requires:
+            - build
+#      - push_image:
+#          requires:
+#            - lint
+#            - test
+#          filters:
+#            branches:
+#              only: master
+

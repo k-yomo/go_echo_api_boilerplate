@@ -1,0 +1,13 @@
+CREATE TABLE users (
+  id INT(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+  first_name VARCHAR(255) NOT NULL COMMENT '名前',
+  last_name VARCHAR(255) NOT NULL COMMENT '名字',
+  gender int NOT NULL DEFAULT 0 COMMENT '性別',
+  date_of_birth DATE DEFAULT NULL COMMENT '誕生日',
+  phone_number VARCHAR(20) NOT NULL UNIQUE COMMENT '電話番号',
+  unconfirmed_phone_number VARCHAR(20) COMMENT '未認証の電話番号',
+  email VARCHAR (255) NOT NULL UNIQUE COMMENT 'Eメールアドレス',
+  password_digest BINARY(60) NOT NULL COMMENT 'ハッシュ化されたパスワード',
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'ユーザー';

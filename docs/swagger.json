@@ -1,0 +1,798 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API server",
+        "title": "Go API Boilerplate",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "0.0.1"
+    },
+    "host": "localhost:1323",
+    "basePath": "/v1",
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Example endpoint that return greeting",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Example"
+                ],
+                "summary": "Greeting",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Name for greeting",
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/confirm": {
+            "post": {
+                "description": "SMS認証チェック",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Confirm temporary SMS Auth",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/input.ConfirmTempUserInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/output.AuthTokenOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Phone number is already registered",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid phone number / region format",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/phone_number": {
+            "patch": {
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "description": "ログインユーザーの電話番号変更",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Update Current User's Phone Number",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/input.UpdateUnconfirmedPhoneNumberInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/output.CurrentUserOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Phone number is already registered",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid phone number format",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/phone_number/confirm": {
+            "post": {
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "description": "ログインユーザーの電話番号を確認 \u0026 更新",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Confirm Current User's Phone Number",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/input.ConfirmPhoneNumberInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/output.CurrentUserOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Phone number is already taken",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid phone number format",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/sign_in": {
+            "post": {
+                "description": "サインイン",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign In",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/input.SignInInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/output.CurrentUserOutput"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid email format",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/sign_up": {
+            "post": {
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "description": "ユーザー登録",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign Up",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/input.SignUpInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/output.CurrentUserOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Email is already registered",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid email format",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/temp_sign_up": {
+            "post": {
+                "description": "SMS認証用の仮ユーザー登録",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Temporary Sign Up",
+                "parameters": [
+                    {
+                        "description": "SMS auth info",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/input.TempSignUpInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/output.TempUserOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "phoneNumber is already taken",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid phone number / region format",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/self": {
+            "get": {
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "description": "ログインユーザーのプロフィール取得",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Current User Profile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/output.CurrentUserOutput"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "description": "ログインユーザーのプロフィール更新",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update Current User Profile",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/input.UpdateProfileInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/output.CurrentUserOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid date format",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/self/email": {
+            "patch": {
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "description": "ログインユーザーのEメール更新",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update Current User Email",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/input.UpdateEmailInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/output.CurrentUserOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Email is already taken",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid email format",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/error_handler.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "error_handler.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "input.ConfirmPhoneNumberInput": {
+            "type": "object",
+            "required": [
+                "authCode"
+            ],
+            "properties": {
+                "authCode": {
+                    "type": "string",
+                    "example": "123456"
+                }
+            }
+        },
+        "input.ConfirmTempUserInput": {
+            "type": "object",
+            "required": [
+                "authCode",
+                "authKey"
+            ],
+            "properties": {
+                "authCode": {
+                    "type": "string",
+                    "example": "123456"
+                },
+                "authKey": {
+                    "type": "string",
+                    "example": "o1w.qeTWAXAl1lcueHRH"
+                }
+            }
+        },
+        "input.SignInInput": {
+            "type": "object",
+            "required": [
+                "password",
+                "phoneNumber",
+                "region"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "example": "password | validation: min=6, max=100"
+                },
+                "phoneNumber": {
+                    "type": "string",
+                    "example": "08012345678 | validation: phone_number_format"
+                },
+                "region": {
+                    "type": "string",
+                    "example": "JP | validation: region_code(https://github.com/ttacon/libphonenumber/blob/master/countrycodetoregionmap.go)"
+                }
+            }
+        },
+        "input.SignUpInput": {
+            "type": "object",
+            "required": [
+                "email",
+                "firstName",
+                "lastName",
+                "password"
+            ],
+            "properties": {
+                "dateOfBirth": {
+                    "type": "string",
+                    "example": "1995-07-05 | validation: iso8601date"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "test@example.com | validation: email_format"
+                },
+                "firstName": {
+                    "type": "string",
+                    "example": "Taro | validation: min=1"
+                },
+                "gender": {
+                    "type": "string",
+                    "example": "unknown | male | female"
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Tanaka | validation: min=1"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "password | validation: min=6, max=100"
+                }
+            }
+        },
+        "input.TempSignUpInput": {
+            "type": "object",
+            "required": [
+                "phoneNumber",
+                "region"
+            ],
+            "properties": {
+                "phoneNumber": {
+                    "type": "string",
+                    "example": "08012345678 | validation: phone_number_format"
+                },
+                "region": {
+                    "type": "string",
+                    "example": "JP | validation: region_code(https://github.com/ttacon/libphonenumber/blob/master/countrycodetoregionmap.go)"
+                }
+            }
+        },
+        "input.UpdateEmailInput": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "test@example.com | validation: email_format"
+                }
+            }
+        },
+        "input.UpdateProfileInput": {
+            "type": "object",
+            "required": [
+                "firstName",
+                "lastName"
+            ],
+            "properties": {
+                "dateOfBirth": {
+                    "type": "string",
+                    "example": "1995-07-05 | validation: iso8601date"
+                },
+                "firstName": {
+                    "type": "string",
+                    "example": "Taro | validation: min=1"
+                },
+                "gender": {
+                    "type": "string",
+                    "example": "unknown | male | female"
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Tanaka | validation: min=1"
+                }
+            }
+        },
+        "input.UpdateUnconfirmedPhoneNumberInput": {
+            "type": "object",
+            "required": [
+                "phoneNumber",
+                "region"
+            ],
+            "properties": {
+                "phoneNumber": {
+                    "type": "string",
+                    "example": "08012345678 | validation: phone_number_format"
+                },
+                "region": {
+                    "type": "string",
+                    "example": "JP | validation: region_code(https://github.com/ttacon/libphonenumber/blob/master/countrycodetoregionmap.go)"
+                }
+            }
+        },
+        "output.AuthTokenOutput": {
+            "type": "object",
+            "properties": {
+                "authToken": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjI4NDY5MTUsImlkIjo1fQ.2VZWDiWu3KDULr8p0MlPwxbTKJGnHLhcg3L_Ishx9e4"
+                }
+            }
+        },
+        "output.CurrentUserOutput": {
+            "type": "object",
+            "properties": {
+                "authToken": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjI4NDY5MTUsImlkIjo1fQ.2VZWDiWu3KDULr8p0MlPwxbTKJGnHLhcg3L_Ishx9e4"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "example": "2020-01-01T00:00:00+09:00"
+                },
+                "dateOfBirth": {
+                    "type": "string",
+                    "example": "1995-07-05"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "test@example.com"
+                },
+                "firstName": {
+                    "type": "string",
+                    "example": "Kanji"
+                },
+                "gender": {
+                    "type": "string",
+                    "example": "unknown | male | female"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Yomoda"
+                },
+                "phoneNumber": {
+                    "type": "string",
+                    "example": "080-1111-2222"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2020-01-01T00:00:00+09:00"
+                }
+            }
+        },
+        "output.TempUserOutput": {
+            "type": "object",
+            "properties": {
+                "authKey": {
+                    "type": "string",
+                    "example": "o1w.qeTWAXAl1lcueHRH"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "example": "2020-01-01T00:00:00+09:00"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "phoneNumber": {
+                    "type": "string",
+                    "example": "080-1111-2222"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "JWTAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

@@ -1,0 +1,1 @@
+variable network_name {}

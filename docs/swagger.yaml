@@ -1,0 +1,543 @@
+basePath: /v1
+definitions:
+  error_handler.ErrorResponse:
+    properties:
+      code:
+        type: string
+      errors:
+        items:
+          type: string
+        type: array
+    type: object
+  input.ConfirmPhoneNumberInput:
+    properties:
+      authCode:
+        example: "123456"
+        type: string
+    required:
+    - authCode
+    type: object
+  input.ConfirmTempUserInput:
+    properties:
+      authCode:
+        example: "123456"
+        type: string
+      authKey:
+        example: o1w.qeTWAXAl1lcueHRH
+        type: string
+    required:
+    - authCode
+    - authKey
+    type: object
+  input.SignInInput:
+    properties:
+      password:
+        example: 'password | validation: min=6, max=100'
+        type: string
+      phoneNumber:
+        example: '08012345678 | validation: phone_number_format'
+        type: string
+      region:
+        example: 'JP | validation: region_code(https://github.com/ttacon/libphonenumber/blob/master/countrycodetoregionmap.go)'
+        type: string
+    required:
+    - password
+    - phoneNumber
+    - region
+    type: object
+  input.SignUpInput:
+    properties:
+      dateOfBirth:
+        example: '1995-07-05 | validation: iso8601date'
+        type: string
+      email:
+        example: 'test@example.com | validation: email_format'
+        type: string
+      firstName:
+        example: 'Taro | validation: min=1'
+        type: string
+      gender:
+        example: unknown | male | female
+        type: string
+      lastName:
+        example: 'Tanaka | validation: min=1'
+        type: string
+      password:
+        example: 'password | validation: min=6, max=100'
+        type: string
+    required:
+    - email
+    - firstName
+    - lastName
+    - password
+    type: object
+  input.TempSignUpInput:
+    properties:
+      phoneNumber:
+        example: '08012345678 | validation: phone_number_format'
+        type: string
+      region:
+        example: 'JP | validation: region_code(https://github.com/ttacon/libphonenumber/blob/master/countrycodetoregionmap.go)'
+        type: string
+    required:
+    - phoneNumber
+    - region
+    type: object
+  input.UpdateEmailInput:
+    properties:
+      email:
+        example: 'test@example.com | validation: email_format'
+        type: string
+    required:
+    - email
+    type: object
+  input.UpdateProfileInput:
+    properties:
+      dateOfBirth:
+        example: '1995-07-05 | validation: iso8601date'
+        type: string
+      firstName:
+        example: 'Taro | validation: min=1'
+        type: string
+      gender:
+        example: unknown | male | female
+        type: string
+      lastName:
+        example: 'Tanaka | validation: min=1'
+        type: string
+    required:
+    - firstName
+    - lastName
+    type: object
+  input.UpdateUnconfirmedPhoneNumberInput:
+    properties:
+      phoneNumber:
+        example: '08012345678 | validation: phone_number_format'
+        type: string
+      region:
+        example: 'JP | validation: region_code(https://github.com/ttacon/libphonenumber/blob/master/countrycodetoregionmap.go)'
+        type: string
+    required:
+    - phoneNumber
+    - region
+    type: object
+  output.AuthTokenOutput:
+    properties:
+      authToken:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjI4NDY5MTUsImlkIjo1fQ.2VZWDiWu3KDULr8p0MlPwxbTKJGnHLhcg3L_Ishx9e4
+        type: string
+    type: object
+  output.CurrentUserOutput:
+    properties:
+      authToken:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjI4NDY5MTUsImlkIjo1fQ.2VZWDiWu3KDULr8p0MlPwxbTKJGnHLhcg3L_Ishx9e4
+        type: string
+      createdAt:
+        example: "2020-01-01T00:00:00+09:00"
+        type: string
+      dateOfBirth:
+        example: "1995-07-05"
+        type: string
+      email:
+        example: test@example.com
+        type: string
+      firstName:
+        example: Kanji
+        type: string
+      gender:
+        example: unknown | male | female
+        type: string
+      id:
+        example: 1
+        type: integer
+      lastName:
+        example: Yomoda
+        type: string
+      phoneNumber:
+        example: 080-1111-2222
+        type: string
+      updatedAt:
+        example: "2020-01-01T00:00:00+09:00"
+        type: string
+    type: object
+  output.TempUserOutput:
+    properties:
+      authKey:
+        example: o1w.qeTWAXAl1lcueHRH
+        type: string
+      createdAt:
+        example: "2020-01-01T00:00:00+09:00"
+        type: string
+      id:
+        example: 1
+        type: integer
+      phoneNumber:
+        example: 080-1111-2222
+        type: string
+    type: object
+host: localhost:1323
+info:
+  contact: {}
+  description: API server
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Go API Boilerplate
+  version: 0.0.1
+paths:
+  /:
+    get:
+      description: Example endpoint that return greeting
+      parameters:
+      - description: Name for greeting
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Greeting
+      tags:
+      - Example
+  /auth/confirm:
+    post:
+      consumes:
+      - application/json
+      description: SMS認証チェック
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/input.ConfirmTempUserInput'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/output.AuthTokenOutput'
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "409":
+          description: Phone number is already registered
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "422":
+          description: Invalid phone number / region format
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+      summary: Confirm temporary SMS Auth
+      tags:
+      - Auth
+  /auth/phone_number:
+    patch:
+      consumes:
+      - application/json
+      description: ログインユーザーの電話番号変更
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/input.UpdateUnconfirmedPhoneNumberInput'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/output.CurrentUserOutput'
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "409":
+          description: Phone number is already registered
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "422":
+          description: Invalid phone number format
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+      security:
+      - JWTAuth: []
+      summary: Update Current User's Phone Number
+      tags:
+      - Auth
+  /auth/phone_number/confirm:
+    post:
+      consumes:
+      - application/json
+      description: ログインユーザーの電話番号を確認 & 更新
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/input.ConfirmPhoneNumberInput'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/output.CurrentUserOutput'
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "409":
+          description: Phone number is already taken
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "422":
+          description: Invalid phone number format
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+      security:
+      - JWTAuth: []
+      summary: Confirm Current User's Phone Number
+      tags:
+      - Auth
+  /auth/sign_in:
+    post:
+      consumes:
+      - application/json
+      description: サインイン
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/input.SignInInput'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/output.CurrentUserOutput'
+            type: object
+        "401":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "422":
+          description: Invalid email format
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+      summary: Sign In
+      tags:
+      - Auth
+  /auth/sign_up:
+    post:
+      consumes:
+      - application/json
+      description: ユーザー登録
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/input.SignUpInput'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/output.CurrentUserOutput'
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "409":
+          description: Email is already registered
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "422":
+          description: Invalid email format
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+      security:
+      - JWTAuth: []
+      summary: Sign Up
+      tags:
+      - Auth
+  /auth/temp_sign_up:
+    post:
+      consumes:
+      - application/json
+      description: SMS認証用の仮ユーザー登録
+      parameters:
+      - description: SMS auth info
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/input.TempSignUpInput'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/output.TempUserOutput'
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "409":
+          description: phoneNumber is already taken
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "422":
+          description: Invalid phone number / region format
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+      summary: Temporary Sign Up
+      tags:
+      - Auth
+  /users/self:
+    get:
+      description: ログインユーザーのプロフィール取得
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/output.CurrentUserOutput'
+            type: object
+        "401":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+      security:
+      - JWTAuth: []
+      summary: Get Current User Profile
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: ログインユーザーのプロフィール更新
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/input.UpdateProfileInput'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/output.CurrentUserOutput'
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "422":
+          description: Invalid date format
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+      security:
+      - JWTAuth: []
+      summary: Update Current User Profile
+      tags:
+      - User
+  /users/self/email:
+    patch:
+      consumes:
+      - application/json
+      description: ログインユーザーのEメール更新
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/input.UpdateEmailInput'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/output.CurrentUserOutput'
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "409":
+          description: Email is already taken
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+        "422":
+          description: Invalid email format
+          schema:
+            $ref: '#/definitions/error_handler.ErrorResponse'
+            type: object
+      security:
+      - JWTAuth: []
+      summary: Update Current User Email
+      tags:
+      - User
+securityDefinitions:
+  JWTAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

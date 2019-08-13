@@ -9,7 +9,6 @@ import (
 
 // Usecase manage all usecases
 type Usecase struct {
-	HelloWorldUsecase HelloWorldUsecase
 	AuthUsecase       AuthUsecase
 	UserUsecase       UserUsecase
 }
@@ -17,7 +16,6 @@ type Usecase struct {
 // NewUsecase returns Usecase
 func NewUsecase(repo *repository.Repository, smsMessenger sms.SMSMessenger) *Usecase {
 	return &Usecase{
-		HelloWorldUsecase: NewHelloWorldUsecase(),
 		AuthUsecase:       NewAuthUsecase(repo.TempUserRepository, repo.UserRepository, smsMessenger),
 		UserUsecase:       NewUserUsecase(repo.UserRepository),
 	}

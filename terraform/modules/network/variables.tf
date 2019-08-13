@@ -1,1 +1,0 @@
-variable network_name {}

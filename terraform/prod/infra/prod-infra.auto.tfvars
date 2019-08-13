@@ -1,0 +1,1 @@
+db_machine_type = "db-f1-micro"

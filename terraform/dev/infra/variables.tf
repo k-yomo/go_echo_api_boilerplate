@@ -1,0 +1,1 @@
+../../shared/infra/variables.tf

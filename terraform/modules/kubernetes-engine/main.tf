@@ -1,10 +1,16 @@
 resource "google_container_cluster" "cluster" {
-  name     = "gke-cluster-${var.env}"
-  location = var.location
-  network = var.network
+  name       = "gke-cluster-${var.env}"
+  location   = var.location
+  network    = var.network
+  subnetwork = var.subnetwork
 
+  // cluster can't be created with no node pool, so we need at least 1 node here.
   remove_default_node_pool = true
-  initial_node_count       = var.initial_node_count
+  initial_node_count       = 1
+
+  ip_allocation_policy {
+    use_ip_aliases = true
+  }
 }
 
 resource "google_container_node_pool" "primary_nodes" {
@@ -15,6 +21,11 @@ resource "google_container_node_pool" "primary_nodes" {
 
   management {
     auto_repair = true
+  }
+
+  autoscaling {
+    max_node_count = 1
+    min_node_count = 1
   }
 
   node_config {
@@ -35,6 +46,11 @@ resource "google_container_node_pool" "preemptible_nodes" {
 
   management {
     auto_repair = true
+  }
+
+  autoscaling {
+    max_node_count = 3
+    min_node_count = 1
   }
 
   node_config {

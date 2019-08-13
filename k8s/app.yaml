@@ -26,7 +26,7 @@ spec:
           livenessProbe:
             httpGet:
               port: 1323
-              path: /v1/readyz
+              path: /v1/healthz
             initialDelaySeconds: 5
             timeoutSeconds: 1
             periodSeconds: 30
@@ -34,7 +34,7 @@ spec:
           readinessProbe:
             httpGet:
               port: 1323
-              path: /v1/healthz
+              path: /v1/readyz
             initialDelaySeconds: 5
             timeoutSeconds: 3
             periodSeconds: 120

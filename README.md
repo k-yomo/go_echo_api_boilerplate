@@ -1,5 +1,5 @@
 # Go API boilerplate built with echo framework
-[![CircleCI](https://circleci.com/gh/k-yomo/go_echo_boilerplate/tree/master.svg?style=svg&circle-token=f3e183e8330bf74666f5916886927656c31ad777)](https://circleci.com/gh/k-yomo/go_echo_boilerplate/tree/master)
+[![CircleCI](https://circleci.com/gh/k-yomo/go_echo_api_boilerplate.svg?style=svg)](https://circleci.com/gh/k-yomo/go_echo_api_boilerplate)
 [![codecov](https://codecov.io/gh/k-yomo/go_echo_boilerplate/branch/master/graph/badge.svg?token=cGgCiXQXVc)](https://codecov.io/gh/k-yomo/go_echo_boilerplate)
 
 

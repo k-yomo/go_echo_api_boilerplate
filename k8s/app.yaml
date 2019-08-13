@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-echo-boilerplate-api
+  labels:
+    app: go-echo-boilerplate-api
+spec:
+  selector:
+    matchLabels:
+      app: go-echo-boilerplate-api
+      tier: api
+  template:
+    metadata:
+      labels:
+        app: go-echo-boilerplate-api
+        tier: api
+    spec:
+      containers:
+        - name: go-echo-boilerplate-api
+          image: # set image here
+          ports:
+            - containerPort: 1323
+          envFrom:
+            - secretRef:
+                name: api-secret
+          livenessProbe:
+            httpGet:
+              port: 1323
+              path: /v1/readyz
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 30
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              port: 1323
+              path: /v1/healthz
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            periodSeconds: 120
+            failureThreshold: 3
+      imagePullSecrets:
+        - name: gcr
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-echo-boilerplate-api
+  labels:
+    app: go-echo-boilerplate-api
+spec:
+  type: NodePort
+  ports:
+    - name: "http-port"
+      protocol: "TCP"
+      port: 1323
+      targetPort: 1323
+  selector:
+    app: go-echo-boilerplate-api

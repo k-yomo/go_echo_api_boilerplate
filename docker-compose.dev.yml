@@ -17,7 +17,7 @@ services:
   app:
     build:
       context: .
-      target: build
+      dockerfile: Dockerfile-dev
     command: realize start --server
     volumes:
       - .:/go/src/github.com/k-yomo/go_echo_boilerplate

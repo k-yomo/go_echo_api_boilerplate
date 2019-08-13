@@ -10,11 +10,11 @@ import (
 	"encoding/csv"
 	"errors"
 	"fmt"
+	"github.com/jmoiron/sqlx"
 	"regexp"
 	"strings"
 
 	"github.com/go-sql-driver/mysql"
-	"github.com/jmoiron/sqlx"
 )
 
 // Executor is the common interface for database operations that can be used with
@@ -29,6 +29,7 @@ type Executor interface {
 type Queryer interface {
 	sqlx.Queryer
 	sqlx.QueryerContext
+	Ping() error
 }
 
 type Execer interface {

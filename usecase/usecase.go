@@ -9,15 +9,17 @@ import (
 
 // Usecase manage all usecases
 type Usecase struct {
-	AuthUsecase       AuthUsecase
-	UserUsecase       UserUsecase
+	HealthCheckUsecase HealthcheckUsecase
+	AuthUsecase        AuthUsecase
+	UserUsecase        UserUsecase
 }
 
 // NewUsecase returns Usecase
 func NewUsecase(repo *repository.Repository, smsMessenger sms.SMSMessenger) *Usecase {
 	return &Usecase{
-		AuthUsecase:       NewAuthUsecase(repo.TempUserRepository, repo.UserRepository, smsMessenger),
-		UserUsecase:       NewUserUsecase(repo.UserRepository),
+		HealthCheckUsecase: NewHealthcheckUsecase(repo.HealthcheckRepository),
+		AuthUsecase: NewAuthUsecase(repo.TempUserRepository, repo.UserRepository, smsMessenger),
+		UserUsecase: NewUserUsecase(repo.UserRepository),
 	}
 }
 

@@ -10,7 +10,7 @@ import (
 func NewHandler(e *echo.Echo, us *usecase.Usecase, authMiddleWare echo.MiddlewareFunc) {
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	api := e.Group("/v1")
-	// this is example
+	NewHealthcheckHandler(api, us.HealthCheckUsecase)
 	NewAuthHandler(api, us.AuthUsecase, authMiddleWare)
 	NewUserHandler(api, us.UserUsecase, authMiddleWare)
 }

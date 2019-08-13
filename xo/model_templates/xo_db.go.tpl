@@ -10,6 +10,7 @@ type Executor interface {
 type Queryer interface {
 	sqlx.Queryer
 	sqlx.QueryerContext
+	Ping() error
 }
 
 type Execer interface {

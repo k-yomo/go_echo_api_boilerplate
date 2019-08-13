@@ -185,24 +185,6 @@ info:
   title: Go API Boilerplate
   version: 0.0.1
 paths:
-  /:
-    get:
-      description: Example endpoint that return greeting
-      parameters:
-      - description: Name for greeting
-        in: query
-        name: name
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-      summary: Greeting
-      tags:
-      - Example
   /auth/confirm:
     post:
       consumes:
@@ -438,6 +420,36 @@ paths:
       summary: Temporary Sign Up
       tags:
       - Auth
+  /healthz:
+    get:
+      description: check if application is living
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Check Liveness
+      tags:
+      - Health Check
+  /readyz:
+    get:
+      description: check if application and the depending services are functioning
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "500":
+          description: 'ping db failed: invalid connection'
+          schema:
+            type: string
+      summary: Check Readiness
+      tags:
+      - Health Check
   /users/self:
     get:
       description: ログインユーザーのプロフィール取得

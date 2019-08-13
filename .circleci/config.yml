@@ -89,7 +89,7 @@ jobs:
       - run:
           name: Push docker image
           command: |
-            docker build -t ${IMAGE_NAME} .
+            docker build -t ${IMAGE_NAME} -f Dockerfile-prod .
             docker tag ${IMAGE_NAME} ${HOST}/${GCP_PROJECT_ID}/${IMAGE_NAME}:${CIRCLE_SHA1}
             docker tag ${IMAGE_NAME} ${HOST}/${GCP_PROJECT_ID}/${IMAGE_NAME}:latest
             if [ -n "${CIRCLE_TAG}" ]; then

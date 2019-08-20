@@ -1,31 +1,28 @@
 package sms
 
 import (
-	"github.com/k-yomo/go_echo_api_boilerplate/config"
 	"github.com/pkg/errors"
-)
-
-var (
-	fromPhoneNumber = "+14156550110"
+	"github.com/sfreiberg/gotwilio"
 )
 
 // SMSMessenger represents sms messenger
 type SMSMessenger interface {
-	SendSMS(phoneNumber string, body string) error
+	SendSMSMessage(phoneNumber string, body string) error
 }
 
-type twilioMessenger struct{}
+type twilioMessenger struct {
+	phoneNumber string
+	*gotwilio.Twilio
+}
 
 // NewMailer returns initialized sms messenger
-func NewSMSMessenger() *twilioMessenger {
-	return &twilioMessenger{}
+func NewSMSMessenger(twilioAccountSid, twilioAuthToken, phoneNumber string) *twilioMessenger {
+	return &twilioMessenger{phoneNumber, gotwilio.NewTwilioClient(twilioAccountSid, twilioAuthToken)}
 }
 
-// SendSMS sends sms message
-func (s *twilioMessenger) SendSMS(toPhoneNumber string, body string) error {
-	client := config.NewTwilioClient()
-
-	_, exception, err := client.SendSMS(fromPhoneNumber, toPhoneNumber, body, "", "")
+// SendSMSMessage sends sms message
+func (s *twilioMessenger) SendSMSMessage(toPhoneNumber string, body string) error {
+	_, exception, err := s.SendSMS(s.phoneNumber, toPhoneNumber, body, "", "")
 	if err != nil {
 		return errors.Wrap(err, "send sms message failed")
 	}

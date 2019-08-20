@@ -47,7 +47,7 @@ func main() {
 	e.Use(middleware.Recover())
 
 	repo := repository.NewRepository(db)
-	uc := usecase.NewUsecase(repo, sms.NewSMSMessenger())
+	uc := usecase.NewUsecase(repo, sms.NewSMSMessenger(config.NewTwilioTokens()))
 	handler.NewHandler(e, uc, jwt_middleware.NewJWTMiddleware())
 	e.Logger.Fatal("", e.Start(":1323"))
 }

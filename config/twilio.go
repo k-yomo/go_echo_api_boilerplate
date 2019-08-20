@@ -1,23 +1,25 @@
 package config
 
 import (
-	"github.com/sfreiberg/gotwilio"
 	"os"
 )
 
-var twilioAccountSid = os.Getenv("TWILIO_ACCOUNT_SID")
-var twilioAuthToken = os.Getenv("TWILIO_AUTH_TOKEN")
+var (
+	fromPhoneNumber = "SET_YOUR_TWILIO_PHONE_NUMBER"
+)
 
-func init() {
+// NewTwilioTokens returns twilio account sid and auth token
+func NewTwilioTokens() (twilioAccountSid, twilioAuthToken, phoneNumber string) {
+	twilioAccountSid = os.Getenv("TWILIO_ACCOUNT_SID")
+	twilioAuthToken = os.Getenv("TWILIO_AUTH_TOKEN")
+	phoneNumber = fromPhoneNumber
+
 	if twilioAccountSid == "" {
 		panic("load TWILIO_ACCOUNT_SID from env variable failed")
 	}
 	if twilioAuthToken == "" {
 		panic("load TWILIO_AUTH_TOKEN from env variable failed")
 	}
-}
 
-// NewTwilioClient returns initialized twilio client
-func NewTwilioClient() *gotwilio.Twilio {
-	return gotwilio.NewTwilioClient(twilioAccountSid, twilioAuthToken)
+	return
 }

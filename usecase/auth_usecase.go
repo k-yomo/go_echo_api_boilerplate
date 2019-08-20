@@ -56,7 +56,7 @@ func (au *authUsecase) TempSignUp(ctx *custom_context.Context) (*output.TempUser
 		return nil, err
 	}
 	smsBody := fmt.Sprintf("【APP_TITLE】認証コード: %s\nコードは30分間有効です。", newTempUser.AuthCode)
-	if err := au.SMSMessenger.SendSMS(newTempUser.PhoneNumber, smsBody); err != nil {
+	if err := au.SMSMessenger.SendSMSMessage(newTempUser.PhoneNumber, smsBody); err != nil {
 		return nil, err
 	}
 	return output.NewTempUserOutput(newTempUser), nil
@@ -174,7 +174,7 @@ func (au *authUsecase) UpdateUnconfirmedPhoneNumber(ctx *custom_context.Context)
 	}
 
 	smsBody := fmt.Sprintf("【APP_TITLE】認証コード: %s\nコードは30分間有効です。", smsReconfirmation.AuthCode)
-	if err := au.SMSMessenger.SendSMS(smsReconfirmation.PhoneNumber, smsBody); err != nil {
+	if err := au.SMSMessenger.SendSMSMessage(smsReconfirmation.PhoneNumber, smsBody); err != nil {
 		return nil, err
 	}
 

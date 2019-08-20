@@ -1,8 +1,8 @@
 package jwt_middleware
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/config"
-	"github.com/k-yomo/go_echo_boilerplate/internal/error_code"
+	"github.com/k-yomo/go_echo_api_boilerplate/config"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/error_code"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )

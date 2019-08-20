@@ -1,7 +1,7 @@
 package sms
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/config"
+	"github.com/k-yomo/go_echo_api_boilerplate/config"
 	"github.com/pkg/errors"
 )
 

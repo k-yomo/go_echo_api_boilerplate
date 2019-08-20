@@ -2,10 +2,10 @@ package handler
 
 import (
 	"fmt"
-	"github.com/k-yomo/go_echo_boilerplate/internal/test_util/fixture"
-	"github.com/k-yomo/go_echo_boilerplate/internal/test_util/mock"
-	"github.com/k-yomo/go_echo_boilerplate/model"
-	"github.com/k-yomo/go_echo_boilerplate/pkg/clock"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/test_util/fixture"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/test_util/mock"
+	"github.com/k-yomo/go_echo_api_boilerplate/model"
+	"github.com/k-yomo/go_echo_api_boilerplate/pkg/clock"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/guregu/null.v3"
 	"net/http"

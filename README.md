@@ -1,6 +1,6 @@
 # Go API boilerplate built with echo framework
 [![CircleCI](https://circleci.com/gh/k-yomo/go_echo_api_boilerplate.svg?style=svg)](https://circleci.com/gh/k-yomo/go_echo_api_boilerplate)
-[![codecov](https://codecov.io/gh/k-yomo/go_echo_boilerplate/branch/master/graph/badge.svg?token=cGgCiXQXVc)](https://codecov.io/gh/k-yomo/go_echo_boilerplate)
+[![codecov](https://codecov.io/gh/k-yomo/go_echo_api_boilerplate/branch/master/graph/badge.svg?token=cGgCiXQXVc)](https://codecov.io/gh/k-yomo/go_echo_api_boilerplate)
 
 
 ## Getting Started
@@ -19,8 +19,8 @@
 
 1. Clone repo
 ```
-git clone https://github.com/k-yomo/go_echo_boilerplate.git
-cd go_echo_boilerplate
+git clone https://github.com/k-yomo/go_echo_api_boilerplate.git
+cd go_echo_api_boilerplate
 ```
 
 2. Create `.env` file in reference to .env.sample
@@ -41,8 +41,8 @@ realize start --server
 
 1. Clone repo
 ```
-git clone https://github.com/k-yomo/go_echo_boilerplate.git
-cd go_echo_boilerplate
+git clone https://github.com/k-yomo/go_echo_api_boilerplate.git
+cd go_echo_api_boilerplate
 ```
 
 2. Create `.env` file in reference to .env.sample

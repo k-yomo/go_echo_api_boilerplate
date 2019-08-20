@@ -3,8 +3,8 @@ package fixture
 import (
 	"context"
 	"database/sql"
-	"github.com/k-yomo/go_echo_boilerplate/model"
-	"github.com/k-yomo/go_echo_boilerplate/pkg/clock"
+	"github.com/k-yomo/go_echo_api_boilerplate/model"
+	"github.com/k-yomo/go_echo_api_boilerplate/pkg/clock"
 	"github.com/pkg/errors"
 	"gopkg.in/guregu/null.v3"
 	"testing"

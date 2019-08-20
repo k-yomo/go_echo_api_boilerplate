@@ -6,7 +6,7 @@ import (
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/mysql"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	"github.com/k-yomo/go_echo_boilerplate/config"
+	"github.com/k-yomo/go_echo_api_boilerplate/config"
 	"github.com/pkg/errors"
 	"os"
 	"time"

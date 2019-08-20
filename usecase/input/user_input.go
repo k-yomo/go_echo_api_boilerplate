@@ -1,6 +1,6 @@
 package input
 
-import "github.com/k-yomo/go_echo_boilerplate/pkg/clock"
+import "github.com/k-yomo/go_echo_api_boilerplate/pkg/clock"
 
 // UpdateUserInput represents parameters for UpdateProfile usecase
 type UpdateProfileInput struct {

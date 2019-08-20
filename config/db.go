@@ -12,7 +12,7 @@ import (
 
 // DBConfig database config info
 type DBConfig struct {
-	DBName   string `default:"go_echo_boilerplate_development" env:"DB_NAME"`
+	DBName   string `default:"go_echo_api_boilerplate_development" env:"DB_NAME"`
 	Host     string `default:"db" env:"DB_HOST"`
 	User     string `default:"mysql" env:"DB_USER"`
 	Password string `default:"mysql" env:"DB_PASSWORD"`
@@ -35,7 +35,7 @@ func NewTestDBConfig() (*DBConfig, error) {
 	if err != nil {
 		return nil, err
 	}
-	dbConfig.DBName = "go_echo_boilerplate_test"
+	dbConfig.DBName = "go_echo_api_boilerplate_test"
 	return dbConfig, nil
 }
 

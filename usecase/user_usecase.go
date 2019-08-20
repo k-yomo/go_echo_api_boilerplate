@@ -2,11 +2,11 @@ package usecase
 
 import (
 	"context"
-	"github.com/k-yomo/go_echo_boilerplate/internal/custom_context"
-	"github.com/k-yomo/go_echo_boilerplate/model"
-	"github.com/k-yomo/go_echo_boilerplate/repository"
-	"github.com/k-yomo/go_echo_boilerplate/usecase/input"
-	"github.com/k-yomo/go_echo_boilerplate/usecase/output"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/custom_context"
+	"github.com/k-yomo/go_echo_api_boilerplate/model"
+	"github.com/k-yomo/go_echo_api_boilerplate/repository"
+	"github.com/k-yomo/go_echo_api_boilerplate/usecase/input"
+	"github.com/k-yomo/go_echo_api_boilerplate/usecase/output"
 )
 
 // UserUsecase is an interface for User related usecase

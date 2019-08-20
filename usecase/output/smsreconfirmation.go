@@ -1,7 +1,7 @@
 package output
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/model"
+	"github.com/k-yomo/go_echo_api_boilerplate/model"
 	"github.com/ttacon/libphonenumber"
 	"time"
 )

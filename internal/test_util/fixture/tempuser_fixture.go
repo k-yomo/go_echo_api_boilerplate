@@ -2,7 +2,7 @@ package fixture
 
 import (
 	"context"
-	"github.com/k-yomo/go_echo_boilerplate/model"
+	"github.com/k-yomo/go_echo_api_boilerplate/model"
 	"github.com/pkg/errors"
 	"testing"
 )

@@ -1,7 +1,7 @@
 package custom_context
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/pkg/params_validator"
+	"github.com/k-yomo/go_echo_api_boilerplate/pkg/params_validator"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 	"net/http"

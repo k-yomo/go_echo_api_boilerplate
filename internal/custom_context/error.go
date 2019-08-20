@@ -2,7 +2,7 @@ package custom_context
 
 import (
 	"fmt"
-	"github.com/k-yomo/go_echo_boilerplate/internal/error_code"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/error_code"
 	"strings"
 )
 

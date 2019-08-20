@@ -48,7 +48,7 @@ gen_migration:
 .PHONY: gen_models
 gen_models:
 	rm -f model/*.xo.go
-	xo mysql://root@$(DB_HOST):$(DB_PORT)/go_echo_boilerplate_development --int32-type int64 --uint32-type int64 --template-path xo/model_templates -o model
+	xo mysql://root@$(DB_HOST):$(DB_PORT)/go_echo_api_boilerplate_development --int32-type int64 --uint32-type int64 --template-path xo/model_templates -o model
 	rm model/schemamigration.xo.go
 
 .PHONY: up_db

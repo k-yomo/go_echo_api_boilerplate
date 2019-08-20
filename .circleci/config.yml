@@ -5,7 +5,7 @@ orbs:
 
 references:
   default: &defaults
-    working_directory: ~/go/src/github/k-yomo/go_echo_boilerplate
+    working_directory: ~/go/src/github/k-yomo/go_echo_api_boilerplate
     docker:
       - image: circleci/golang:1.12
   restore_module_cache: &restore_module_cache
@@ -34,7 +34,7 @@ jobs:
         environment:
           TZ: Asia/Tokyo
           ENV: test
-          DBName: go_echo_boilerplate_test
+          DBName: go_echo_api_boilerplate_test
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
           DB_USER: 'mysql'
@@ -45,7 +45,7 @@ jobs:
           TWILIO_AUTH_TOKEN: dummy_token
       - image: circleci/mysql:5.7
         environment:
-          MYSQL_DATABASE: go_echo_boilerplate_test
+          MYSQL_DATABASE: go_echo_api_boilerplate_test
           MYSQL_USER: 'mysql'
           MYSQL_PASSWORD: 'mysql'
     steps:

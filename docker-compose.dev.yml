@@ -10,7 +10,7 @@ services:
       - db_data:/var/lib/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
-      MYSQL_DATABASE: go_echo_boilerplate_development
+      MYSQL_DATABASE: go_echo_api_boilerplate_development
       MYSQL_USER: mysql
       MYSQL_PASSWORD: mysql
 
@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile-dev
     command: realize start --server
     volumes:
-      - .:/go/src/github.com/k-yomo/go_echo_boilerplate
+      - .:/go/src/github.com/k-yomo/go_echo_api_boilerplate
     depends_on:
       - db
     ports:

@@ -2,8 +2,8 @@ package jwt_generator
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"github.com/k-yomo/go_echo_boilerplate/config"
-	"github.com/k-yomo/go_echo_boilerplate/pkg/clock"
+	"github.com/k-yomo/go_echo_api_boilerplate/config"
+	"github.com/k-yomo/go_echo_api_boilerplate/pkg/clock"
 	"github.com/pkg/errors"
 	"time"
 )

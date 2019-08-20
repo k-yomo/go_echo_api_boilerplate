@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/internal/custom_context"
-	"github.com/k-yomo/go_echo_boilerplate/usecase"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/custom_context"
+	"github.com/k-yomo/go_echo_api_boilerplate/usecase"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )

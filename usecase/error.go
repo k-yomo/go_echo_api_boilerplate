@@ -2,7 +2,7 @@ package usecase
 
 import (
 	"fmt"
-	"github.com/k-yomo/go_echo_boilerplate/internal/error_code"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/error_code"
 )
 
 type alreadyTakenError struct {

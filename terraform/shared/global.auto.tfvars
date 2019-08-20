@@ -1,5 +1,5 @@
-project_name       = "go_echo_boilerplate"
-service_name       = "go_echo_boilerplate"
+project_name       = "go_echo_api_boilerplate"
+service_name       = "go_echo_api_boilerplate"
 gcp_region         = "asia-northeast1"
 availability_zones = [
   "asia-northeast1-a",

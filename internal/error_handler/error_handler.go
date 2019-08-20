@@ -2,8 +2,8 @@ package error_handler
 
 import (
 	"fmt"
-	"github.com/k-yomo/go_echo_boilerplate/internal/custom_context"
-	"github.com/k-yomo/go_echo_boilerplate/internal/error_code"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/custom_context"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/error_code"
 	"github.com/labstack/echo/v4"
 	"github.com/pkg/errors"
 	"net/http"

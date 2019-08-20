@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"github.com/go-sql-driver/mysql"
-	"github.com/k-yomo/go_echo_boilerplate/pkg/clock"
+	"github.com/k-yomo/go_echo_api_boilerplate/pkg/clock"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/guregu/null.v3"

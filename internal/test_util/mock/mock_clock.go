@@ -1,7 +1,7 @@
 package mock
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/pkg/clock"
+	"github.com/k-yomo/go_echo_api_boilerplate/pkg/clock"
 	"time"
 )
 

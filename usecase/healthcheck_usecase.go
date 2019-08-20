@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/internal/custom_context"
-	"github.com/k-yomo/go_echo_boilerplate/repository"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/custom_context"
+	"github.com/k-yomo/go_echo_api_boilerplate/repository"
 )
 
 type HealthcheckUsecase interface {

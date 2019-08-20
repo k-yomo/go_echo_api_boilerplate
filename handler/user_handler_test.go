@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/internal/test_util/fixture"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/test_util/fixture"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/guregu/null.v3"
 	"net/http"

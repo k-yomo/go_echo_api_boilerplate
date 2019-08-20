@@ -1,7 +1,7 @@
 package params_validator
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/pkg/clock"
+	"github.com/k-yomo/go_echo_api_boilerplate/pkg/clock"
 	"github.com/ttacon/libphonenumber"
 	"gopkg.in/go-playground/validator.v9"
 	"time"

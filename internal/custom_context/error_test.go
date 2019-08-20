@@ -2,7 +2,7 @@ package custom_context
 
 import (
 	"github.com/bmizerany/assert"
-	"github.com/k-yomo/go_echo_boilerplate/internal/error_code"
+	"github.com/k-yomo/go_echo_api_boilerplate/internal/error_code"
 	"testing"
 )
 

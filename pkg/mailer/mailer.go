@@ -1,13 +1,13 @@
 package mailer
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/config"
+	"github.com/k-yomo/go_echo_api_boilerplate/config"
 	"github.com/pkg/errors"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
 var (
-	fromAddress = "info@go-echo-boilerplate.com"
+	fromAddress = "info@go-echo-api-boilerplate.com"
 	fromName    = "THIS_SHOULD_BE_REPLACED"
 )
 

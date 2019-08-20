@@ -1,8 +1,8 @@
 package output
 
 import (
-	"github.com/k-yomo/go_echo_boilerplate/model"
-	"github.com/k-yomo/go_echo_boilerplate/pkg/jwt_generator"
+	"github.com/k-yomo/go_echo_api_boilerplate/model"
+	"github.com/k-yomo/go_echo_api_boilerplate/pkg/jwt_generator"
 	"github.com/ttacon/libphonenumber"
 	"gopkg.in/guregu/null.v3"
 	"time"
